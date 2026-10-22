@@ -4,5 +4,7 @@ __pycache__/
 *.aux
 *.log
 *.out
+out/
+P2/Assignment_delivery/README.md
 *.toc
 *.synctex.gz
