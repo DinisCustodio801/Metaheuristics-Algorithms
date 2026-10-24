@@ -18,8 +18,8 @@ public class LocalOptima {
 
         // atribuicao inicial: tudo false; estado incremental calculado por varrimento total
         for (int v = 0; v < n; v++) f.x[v] = false;
-        f.fit = 0;
-        for (int c = 0; c < f.m; c++) {
+        f.fit = f.alwaysSat;                               // tautologias sempre satisfeitas
+        for (int c = 0; c < f.clauses.length; c++) {
             int k = 0;
             for (int lit : f.clauses[c]) if (lit < 0) k++;   // x tudo false => so literais negados sao true
             f.cnt[c] = k;                                    // cnt = count: nº de literais verdadeiros na clausula c
