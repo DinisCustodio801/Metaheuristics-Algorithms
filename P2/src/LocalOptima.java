@@ -22,8 +22,8 @@ public class LocalOptima {
         for (int c = 0; c < f.m; c++) {
             int k = 0;
             for (int lit : f.clauses[c]) if (lit < 0) k++;   // x tudo false => so literais negados sao true
-            f.cnt[c] = k;
-            if (k > 0) f.fit++;
+            f.cnt[c] = k;                                    // cnt = count: nº de literais verdadeiros na clausula c
+            if (k > 0) f.fit++;                              // fit = fitness: +1 clausula satisfeita
         }
 
         long[] exact = new long[K + 1], upTo = new long[K + 1];

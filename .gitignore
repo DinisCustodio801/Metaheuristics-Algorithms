@@ -6,5 +6,6 @@ __pycache__/
 *.out
 out/
 P2/Assignment_delivery/README.md
+P2/explicacoes/
 *.toc
 *.synctex.gz
