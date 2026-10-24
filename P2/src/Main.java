@@ -5,6 +5,16 @@ import java.util.*;
  * Uso:  java Main <q1|q2|q3|q4|q5> [pasta_dos_cnf] [nº_de_runs]
  *   q1 = NAHC   q2 = MSNAHC   q3 = VNA   q4 = MSVNA   q5 = otimos locais (uf20-01)
  * Defaults: pasta "." e 30 runs.
+ *
+ * Como compilar e correr:
+ *   javac -d out src\*.java
+ *   java -cp out Main q1 <pasta_cnf> 30
+ *   java -cp out Main q2 <pasta_cnf> 30
+ *   java -cp out Main q3 <pasta_cnf> 30
+ *   java -cp out Main q4 <pasta_cnf> 30
+ *   java -cp out Main q5 <pasta_cnf>
+ * 
+ *  o 3º argumento e o nº de execucoes, e a q5 ignora-o)
  */
 public class Main {
     static final long MAX_EVALS = 10_000_000L;
