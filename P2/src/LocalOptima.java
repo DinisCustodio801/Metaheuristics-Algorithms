@@ -27,7 +27,6 @@ public class LocalOptima {
         }
 
         long[] exact = new long[K + 1], upTo = new long[K + 1];
-        int[] chosen = new int[K + 1];
 
         // visita cada atribuicao exatamente uma vez (ordem do odometro)
         for (long step = 0; step < size; step++) {
@@ -35,7 +34,7 @@ public class LocalOptima {
             int base = f.fit;
             boolean localUpTo = true;
             for (int k = 1; k <= K; k++) {
-                if (!hasImproving(f, k, 0, 1, base, chosen)) exact[k]++;
+                if (!hasImproving(f, k, 0, 1, base)) exact[k]++;
                 else localUpTo = false;
                 if (localUpTo) upTo[k]++;
             }
@@ -60,13 +59,12 @@ public class LocalOptima {
     /** Gerador de combinacoes: existe vizinho a distancia de Hamming exatamente k com
         fitness estritamente melhor? Faz flip dos k indices escolhidos ao descer na
         recursao e unflip ao subir (estado sempre restaurado). */
-    static boolean hasImproving(MaxSat f, int k, int start, int depth, int base, int[] chosen) {
+    static boolean hasImproving(MaxSat f, int k, int start, int depth, int base) {
         for (int i = start; i <= f.n - (k - depth + 1); i++) {
-            chosen[depth - 1] = i;
             f.flip(i);
             boolean better;
             if (depth == k) better = f.fit > base;
-            else better = hasImproving(f, k, i + 1, depth + 1, base, chosen);
+            else better = hasImproving(f, k, i + 1, depth + 1, base);
             f.flip(i);
             if (better) return true;
         }

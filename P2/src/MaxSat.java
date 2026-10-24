@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.management.*;
 import java.util.*;
 
 /**
@@ -8,11 +7,10 @@ import java.util.*;
  * - Solucao atual: UM unico array x, modificado no sitio (nunca se copia).
  * - Avaliacao incremental: cnt[c] = nº de literais verdadeiros da clausula c;
  *   fit = nº de clausulas satisfeitas (cnt[c] >= 1).
+ *   Assume que nenhuma clausula contem a mesma variavel mais do que uma vez
+ *   (verifica-se nas instancias uf*).
  */
 public class MaxSat {
-    private static final ThreadMXBean BEAN = ManagementFactory.getThreadMXBean();
-
-    // ---- instancia ----
     public final int n, m;
     public final int[][] clauses;    // literais DIMACS (com sinal) de cada clausula
     public final int[][] occClause;  // para cada variavel: clausulas onde aparece
@@ -86,15 +84,15 @@ public class MaxSat {
 
     public void resetTracker() {
         evals = 0; bestFit = -1; evalsAtBest = 0; cpuAtBestNs = 0;
-        cpu0 = BEAN.getCurrentThreadCpuTime();
+        cpu0 = System.nanoTime();     // tempo decorrido (relogio monotónico, resolucao ns)
     }
 
-    /** Guarda avaliacoes e tempo de CPU se a solucao atual for a melhor ate agora. */
+    /** Guarda avaliacoes e tempo decorrido se a solucao atual for a melhor ate agora. */
     public void record() {
         if (fit > bestFit) {
             bestFit = fit;
             evalsAtBest = evals;
-            cpuAtBestNs = BEAN.getCurrentThreadCpuTime() - cpu0;
+            cpuAtBestNs = System.nanoTime() - cpu0;
         }
     }
 
@@ -147,5 +145,10 @@ public class MaxSat {
             int j = r.nextInt(i + 1);
             int t = perm[i]; perm[i] = perm[j]; perm[j] = t;
         }
+    }
+
+    /** Repoe a ordem natural da vizinhanca (chamada no inicio de cada execucao). */
+    public void resetPerm() {
+        for (int i = 0; i < n; i++) perm[i] = i;
     }
 }

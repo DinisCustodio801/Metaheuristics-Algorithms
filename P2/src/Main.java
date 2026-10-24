@@ -44,11 +44,16 @@ public class Main {
             "instance", "m", "best", "#best", "mean", "evals@best", "cpu_ms@best");
         for (String name : INSTANCES) {
             MaxSat p = MaxSat.load(dir + File.separator + name + ".cnf");
+            // aquecimento da JVM (compilacao JIT), nao contabilizado nas medicoes
+            p.resetTracker();
+            p.resetPerm();
+            algo.run(p, new Random(987654L));
             int[] bf = new int[runs];
             long[] be = new long[runs], bt = new long[runs];
             for (int run = 0; run < runs; run++) {
                 Random r = new Random(12345L + run);     // seed fixa => reprodutivel
                 p.resetTracker();
+                p.resetPerm();
                 algo.run(p, r);
                 bf[run] = p.bestFit; be[run] = p.evalsAtBest; bt[run] = p.cpuAtBestNs;
             }
