@@ -11,23 +11,23 @@ import java.util.*;
  *   (verifica-se nas instancias uf*).
  */
 public class MaxSat {
-    public final int n, m;
-    public final int[][] clauses;    // literais DIMACS (com sinal) de cada clausula
-    public final int[][] occClause;  // para cada variavel: clausulas onde aparece
-    public final int[][] occSign;    // para cada variavel: +1 se positiva, -1 se negada
+    public final int n, m;            // n = nº de variaveis; m = nº de clausulas
+    public final int[][] clauses;     // literais DIMACS (com sinal) de cada clausula
+    public final int[][] occClause;   // occ = "occurrences": occClause[v][k] = para cada variável v em que clausula c ela ocorre (k = 0..#ocorrencias-1)
+    public final int[][] occSign;     // occSign[v][k] = sinal dessa ocorrencia (+1 se positiva, -1 se negada)
 
     // ---- solucao atual ----
-    public final boolean[] x;
-    public final int[] cnt;
-    public final int[] perm;         // permutacao auxiliar (ordem aleatoria da vizinhanca)
-    public int fit;
+    public final boolean[] x;         // x[v] = valor atual da variavel v
+    public final int[] cnt;           // cnt = "count": cnt[c] = nº de literais VERDADEIROS na clausula c
+    public final int[] perm;          // perm = "permutation": ordem (baralhavel) de visita dos vizinhos
+    public int fit;                   // fit = "fitness": nº de clausulas satisfeitas (cnt[c] >= 1)
 
     // ---- estatisticas da execucao ----
-    public long evals;               // nº de avaliacoes (1 por vizinho visitado)
-    public int bestFit;
-    public long evalsAtBest;
-    public long cpuAtBestNs;
-    private long cpu0;
+    public long evals;                // evals = "evaluations": 1 por vizinho visitado
+    public int bestFit;               // melhor fitness vista ate agora nesta execucao
+    public long evalsAtBest;          // nº de avaliacoes quando o melhor foi atingido
+    public long cpuAtBestNs;          // tempo decorrido (ns) quando o melhor foi atingido
+    private long cpu0;                // instante de inicio da execucao (System.nanoTime)
 
     private MaxSat(int n, int[][] clauses) {
         this.n = n;
