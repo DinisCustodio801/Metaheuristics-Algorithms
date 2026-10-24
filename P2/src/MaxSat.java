@@ -1,18 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-/**
- * Problema MAXSAT + solucao atual.
- *   Instancia: clausulas lidas do ficheiro DIMACS (variaveis 0-based internamente).
- *   O load normaliza cada clausula: literais repetidos da mesma variavel sao fundidos
- *   num so, e tautologias (a variavel com os dois sinais na mesma clausula) sao
- *   removidas e contadas em alwaysSat (satisfeitas por qualquer atribuicao).
- *   Assim, nenhuma clausula contem a mesma variavel mais do que uma vez, que e o que
- *   a avaliacao incremental assume.
- *   Solucao atual: UM unico array x, modificado no sitio (nunca se copia).
- *   Avaliacao incremental: cnt[c] = nº de literais verdadeiros da clausula c;
- *   fit = nº de clausulas satisfeitas (cnt[c] >= 1) + alwaysSat.
- */
+
 public class MaxSat {
     public final int n, m;            // n = nº de variaveis; m = nº TOTAL de clausulas (inclui tautologias)
     public final int alwaysSat;       // nº de clausulas tautologicas (sempre satisfeitas, ja contadas em fit)
